@@ -178,18 +178,8 @@ body {
 #log div {
   padding: 1px 0;
 }
-.rarity-common {
-  color: #c8d0dc;
-}
-.rarity-uncommon {
-  color: #6fd08c;
-}
-.rarity-rare {
-  color: #5aa8ff;
-}
-.rarity-epic {
-  color: #c58cff;
-}
+
+
 
 
 #inventory {
@@ -241,7 +231,7 @@ div {
 
 .health {
   margin: 5px;
-  font-size: 10px
+  font-size: 15px
 }
 
 .gameLog {
@@ -295,4 +285,24 @@ div {
     font-weight: bold;
     font-style: italic;
   }
+
+  &.drop {
+    font-style: italic;
+  }
+}
+
+.common {
+  color: #c8d0dc;
+}
+
+.uncommon {
+  color: #6fd08c;
+}
+
+.rare {
+  color: #5aa8ff;
+}
+
+.epic {
+  color: #c58cff;
 }

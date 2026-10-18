@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import {ZONES} from "@/data/zones.js";
-import {MAX_LOG, BASE, BOSS_EVERY} from "@/data/constants.js";
+import {MAX_LOG, BASE, BOSS_EVERY, MAX_INVENTORY} from "@/data/constants.js";
+import {ITEMS} from "@/data/items.js";
 
 let playerTimer = 0;
 let enemyTimer = 0;
@@ -36,13 +37,13 @@ export const useGame = defineStore('game', {
             out.atk += (state.level - 1) * 1.5
 
             // Apply Equipment Stats
-            for(let item of Object.values(state.equipped)) {
-                if(!item) {
+            for(let slot of Object.values(state.equipped)) {
+                if(!slot) {
                     // Item doesn't exist
                     continue;
                 }
 
-                for (let [stat, value] of Object.entries(item.stats)) {
+                for (let [stat, value] of Object.entries(slot.stats)) {
                     out[stat] = (out[stat] || 0) + value;
                 }
             }
@@ -58,21 +59,61 @@ export const useGame = defineStore('game', {
     },
 
     actions: {
+        getSellMult(rarity){
+            switch(rarity) {
+                case "common":
+                    return 1;
+                case "uncommon":
+                    return 5;
+                case "rare":
+                    return 10;
+                case "epic":
+                    return 20;
+                default:
+                    return 1;
+            }
+        },
         sellItem(itemId) {
             let i = this.inventory.findIndex(it => it.uid === itemId)
 
             if (i < 0) return
 
-            this.gold += this.inventory[i].item.sell;
+            this.gold += this.inventory[i].item.sell * this.getSellMult(this.inventory[i].item.rarity);
             this.inventory.splice(i, 1)
+        },
+        equipItem(itemId) {
+            let i = this.inventory.findIndex(it => it.uid === itemId)
+
+            if (i < 0) return
+
+            let slot = this.inventory[i]
+            let newGear = slot.item;
+            let oldGear = null;
+
+            if(this.equipped[newGear.slot] !== null) {
+                oldGear = this.equipped[newGear.slot]
+            }
+
+            this.equipped[newGear.slot] = newGear;
+
+            this.inventory.splice(i, 1)
+
+            if(oldGear) {
+                this.addItem(oldGear)
+            }
         },
 
         addItem(item) {
+            if(this.inventory.length >= MAX_INVENTORY) {
+                this.writeLog("Inventory Full!", "common")
+                return;
+            }
             this.inventory.push({item: item, uid: this.nextUid})
 
             this.nextUid++;
         },
         tick(dt) {
+
             if(!this.enemy) {
                 this.spawnEnemy();
             }
@@ -124,7 +165,9 @@ export const useGame = defineStore('game', {
                 base *= 1.5;
             }
 
-            base = Math.round(base)
+            base -= this.enemy.def;
+
+            base = Math.max(1, Math.round(base))
 
             this.enemy.hp -= base;
 
@@ -173,7 +216,9 @@ export const useGame = defineStore('game', {
                 this.doLevelUp();
             }
 
-            this.kills += 0;
+            this.rollLoot();
+
+            this.kills += 1;
 
             this.spawnEnemy();
         },
@@ -193,6 +238,28 @@ export const useGame = defineStore('game', {
             this.exp -= this.expToNext;
 
             this.level += 1;
+        },
+        rollLoot() {
+            let loot = ZONES[this.zone].drops.sort((a, b) => { return a[1] - b[1] });
+            let total = 0;
+
+            for(let [, rarity] of loot) {
+                total += rarity;
+            }
+
+            let lootRoll = Math.random() * total
+
+            for(let [name, weight] of loot) {
+                lootRoll -= weight;
+
+                if(lootRoll < 0) {
+                    let item = ITEMS[name];
+                    this.writeLog(`${this.enemy.name} dropped ${item.name}!`, "drop " + item.rarity)
+                    this.addItem(item);
+
+                    return;
+                }
+            }
         }
     },
 })

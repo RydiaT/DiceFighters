@@ -1,4 +1,5 @@
 <template>
+  <div class="sectionTitle">Log</div>
   <div class="gameLog">
    <div v-for="(log, index) in game.log" :class="'log ' + log.type" :key="log.id">
      {{ log.text }}
