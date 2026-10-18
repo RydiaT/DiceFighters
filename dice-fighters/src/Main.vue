@@ -1,7 +1,13 @@
 <template>
-  <div>
-    <inventory-list></inventory-list>
-  </div>
+  <template>
+    <v-app>
+      <v-main>
+        <v-container>
+          <inventory-list />
+        </v-container>
+      </v-main>
+    </v-app>
+  </template>
 </template>
 
 <script setup>
@@ -13,7 +19,7 @@ import {ITEMS} from "@/data/items.js";
 let game = useGame()
 
 onMounted(() => {
-  game.addItem
+  game.addItem(ITEMS.rustySword)
 })
 </script>
 
