@@ -7,6 +7,7 @@ export const useGame = defineStore('game', {
         level: 1,
         gold: 0,
         inventory: [],
+        nextUid: 0,
         equipped: {weapon: null, armor: null, ring: null}
     }),
 
@@ -32,9 +33,9 @@ export const useGame = defineStore('game', {
                 for (let [stat, value] of Object.entries(item.stats)) {
                     out[stat] = (out[stat] || 0) + value;
                 }
-
-                return out;
             }
+
+            return out;
         },
     },
 
@@ -47,5 +48,11 @@ export const useGame = defineStore('game', {
             this.gold += 2
             this.inventory.splice(i, 1)
         },
+
+        addItem(item) {
+            this.inventory.push({item: item, uid: this.nextUid})
+
+            this.nextUid++;
+        }
     },
 })

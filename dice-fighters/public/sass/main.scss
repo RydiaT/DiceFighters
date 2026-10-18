@@ -1,0 +1,240 @@
+/* Color Palette Variables */
+$green: #70b035;
+$lightGreen: #e5f3d7;
+$darkGreen: #4b7523;
+$darkerGreen: #101507;
+
+$blue: #337ab7;
+$lightBlue: #d6e4f0;
+$darkBlue: #1e496d;
+$darkerBlue: #08161e;
+
+$red: #c9302c;
+$lightRed: #f4d5d4;
+$darkRed: #781c1a;
+$darkerRed: #200707;
+
+$yellow: #ffea4d;
+$lightYellow: #fffadb;
+$darkYellow: #e5d245;
+
+$orange: #e09927;
+$lightOrange: #fbead2;
+$darkOrange: #64430f;
+$darkerOrange: #171203;
+
+$tan: #afa183;
+$lightTan: #dfd9cd;
+$darkTan: #69604e;
+
+$teal: #31b0d5;
+$lightTeal: #c1e7f2;
+$darkTeal: #1d697f;
+
+$purple: #5531d5;
+$lightPurple: #cac1f2;
+$darkPurple: #2f1d7f;
+$darkerPurple: #0d071f;
+
+$brown: #3c1b0c;
+$lightBrown: #ebe8e6;
+$darkBrown: #2a1208;
+
+$gray: #b8b8b8;
+$highlightGray: #c6c6c6;
+$lightGray: #e9e9e9;
+$darkGray: #6e6e6e;
+$fontGray: #333;
+
+.green{
+  background-color:$green;
+}
+.greenText{
+  color: $darkGreen !important;
+}
+.lightGreen{
+  background-color:$lightGreen;
+}
+.darkGreen{
+  background-color:$darkGreen;
+}
+.darkerGreen{
+  background-color:$darkerGreen;
+}
+
+.blue{
+  background-color:$blue;
+}
+.lightBlue{
+  background-color:$lightBlue;
+}
+.darkBlue{
+  background-color:$darkBlue;
+}
+
+.red{
+  background-color:$red;
+}
+.redText{
+  color: $darkRed !important;
+}
+.lightRed{
+  background-color:$lightRed;
+}
+.darkRed{
+  background-color:$darkRed;
+}
+
+.yellow{
+  background-color:$yellow;
+}
+.lightYellow{
+  background-color:$lightYellow;
+}
+.darkYellow{
+  background-color:$darkYellow;
+}
+
+.orange{
+  background-color:$orange;
+}
+.lightOrange{
+  background-color:$lightOrange;
+}
+.darkOrange{
+  background-color:$darkOrange;
+}
+.darkerOrange{
+  background-color:$darkerOrange;
+}
+
+.tan{
+  background-color:$tan;
+}
+.lightTan{
+  background-color:$lightTan;
+}
+.darkTan{
+  background-color:$darkTan;
+}
+
+.teal{
+  background-color:$teal;
+}
+.lightTeal{
+  background-color:$lightTeal;
+}
+.darkTeal{
+  background-color:$darkTeal;
+}
+
+.purple{
+  background-color:$purple;
+}
+.lightPurple{
+  background-color:$lightPurple;
+}
+.darkPurple{
+  background-color:$darkPurple;
+}
+.darkerPurple{
+  background-color:$darkerPurple;
+}
+
+body {
+  background: #14181f;
+}
+.panel {
+  background: #1c222c; border: 1px solid #2c3544; border-radius: 6px;
+}
+/* ENEMY ART SLOT: change size here. The <img> fills this frame. */
+.art-frame {
+  width: 100%; max-width: 256px; aspect-ratio: 1 / 1; margin: 0 auto;
+  border: 2px dashed #3a4659; border-radius: 6px; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; color: #6c7a90; font-size: .8rem; overflow: hidden;
+}
+.art-frame img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated;
+}
+.art-frame.hit {
+  animation: shake .15s;
+}
+@keyframes shake {
+  25% { transform: translateX(-4px); } 75% { transform: translateX(4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .art-frame.hit { animation: none; }
+}
+.progress {
+  height: 18px; background: #0f131a;
+}
+.progress-bar {
+  transition: width .15s linear; font-size: .72rem;
+}
+#log {
+  height: 180px; overflow-y: auto; font-size: .82rem; font-family: ui-monospace, Menlo, monospace;
+}
+#log div {
+  padding: 1px 0;
+}
+.rarity-common {
+  color: #c8d0dc;
+}
+.rarity-uncommon {
+  color: #6fd08c;
+}
+.rarity-rare {
+  color: #5aa8ff;
+}
+.rarity-epic {
+  color: #c58cff;
+}
+
+
+#inventory {
+  max-height: 320px; overflow-y: auto;
+}
+
+div {
+  border-radius: 5px;
+}
+
+.section{
+  padding: 10px;
+}
+
+.sectionTitle{
+  font-size: 14px;
+  border-bottom: 2px solid;
+  margin-bottom: 15px;
+  font-weight:bold;
+}
+
+.defaultSection{
+  background-color: #000;
+}
+.inventoryTitle{
+  color: $lightOrange;
+}
+.inventorySection{
+  background-color: $darkerOrange !important;
+}
+.costTitle{
+  color: $lightGreen;
+}
+.costSection{
+  background-color: $darkerGreen !important;
+}
+.settingsTitle{
+  color: $lightBlue;
+}
+.settingsSection{
+  background-color: $darkerBlue !important;
+}
+.dangerTitle{
+  color: $lightRed;
+}
+.dangerSection{
+  background-color: $darkerRed !important;
+}

@@ -1,10 +1,7 @@
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
-  <inventory-list></inventory-list>
+  <div>
+    <inventory-list></inventory-list>
+  </div>
 </template>
 
 <script setup>
@@ -16,7 +13,7 @@ import {ITEMS} from "@/data/items.js";
 let game = useGame()
 
 onMounted(() => {
-  game.inventory.push(ITEMS.rustySword)
+  game.addItem
 })
 </script>
 
