@@ -20,6 +20,7 @@ export const useGame = defineStore('game', {
         enemy: null,
         log: [],
         isPaused: false,
+        logId: 0,
     }),
 
     getters: {
@@ -49,10 +50,10 @@ export const useGame = defineStore('game', {
             return out;
         },
         expToNext() {
-            return (20 * 1.35 ** this.level - 1);
+            return Math.floor(20 * 1.35 ** (this.level - 1));
         },
         maxHp () {
-            return Math.floor((BASE.maxHp * (this.level * 1.5)) + BASE.maxHp);
+            return Math.max(BASE.maxHp, this.stats.maxHp + (this.level - 1) * 8)
         }
     },
 
@@ -62,7 +63,7 @@ export const useGame = defineStore('game', {
 
             if (i < 0) return
 
-            this.gold += 2
+            this.gold += this.inventory[i].item.sell;
             this.inventory.splice(i, 1)
         },
 
@@ -100,17 +101,17 @@ export const useGame = defineStore('game', {
             let zone = ZONES[this.zone];
 
             if(this.kills !== 0 && this.kills % BOSS_EVERY === 0) {
-                this.enemy = zone.boss;
+                this.enemy = { ... zone.boss, maxHp: zone.boss.hp};
                 this.kills = 0;
 
                 this.writeLog(`${this.enemy.name} appeared!`, 'spawn boss')
             } else {
-                this.enemy = zone.enemies[this.randint(0, zone.enemies.length - 1)]
+                let guy = zone.enemies[this.randint(0, zone.enemies.length - 1)]
+
+                this.enemy = { ... guy, maxHp: guy.hp};
 
                 this.writeLog(`${this.enemy.name} appeared!`, 'spawn')
             }
-
-            this.enemy.maxHp = this.enemy.hp;
         },
         randint(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -118,10 +119,12 @@ export const useGame = defineStore('game', {
         playerAttack() {
             let base = this.stats.atk;
 
-            if(this.randint(0, 100) < this.stats.crit) {
+            if(this.randint(0, 100) < this.stats.crit * 100) {
                 this.writeLog(`CRITICAL HIT!!!`, "crit");
                 base *= 1.5;
             }
+
+            base = Math.round(base)
 
             this.enemy.hp -= base;
 
@@ -139,6 +142,8 @@ export const useGame = defineStore('game', {
 
             base -= this.stats.def;
 
+            base = Math.max(1, Math.round(base))
+
             this.hp -= base;
 
             if(this.hp <= 0) {
@@ -149,21 +154,26 @@ export const useGame = defineStore('game', {
             }
         },
         writeLog(text, type = "basic") {
-            if(this.log.length === MAX_LOG) {
-                this.log.slice(0, 1);
+            if(this.log.length >= MAX_LOG) {
+                this.log.shift();
             }
 
-            this.log.push({text: text, type: type})
+            this.log.push({text: text, type: type, id: this.logId})
+
+            this.logId += 1;
         },
         onEnemyDeath() {
             this.writeLog(`${this.enemy.name} defeated!`, "basic")
+            this.writeLog(`You got: ${this.enemy.exp} exp and ${this.enemy.gold} gold!`, "basic")
 
             this.exp += this.enemy.exp;
             this.gold += this.enemy.gold;
 
-            if(this.expToNext <= this.exp) {
+            while(this.expToNext <= this.exp) {
                 this.doLevelUp();
             }
+
+            this.kills += 0;
 
             this.spawnEnemy();
         },
@@ -179,6 +189,8 @@ export const useGame = defineStore('game', {
         },
         doLevelUp() {
             this.writeLog(`DING! Level Up! Lvl. ${this.level} -> Lvl. ${this.level + 1}`, "levelUp")
+
+            this.exp -= this.expToNext;
 
             this.level += 1;
         }

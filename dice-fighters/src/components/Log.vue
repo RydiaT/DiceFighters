@@ -1,6 +1,6 @@
 <template>
   <div class="gameLog">
-   <div v-for="(log, index) in game.log" :class="'log ' + log.type">
+   <div v-for="(log, index) in game.log" :class="'log ' + log.type" :key="log.id">
      {{ log.text }}
    </div>
     <div class="anchor"></div>

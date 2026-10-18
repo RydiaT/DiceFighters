@@ -34,7 +34,7 @@ import InventoryList from "@/components/InventoryList.vue";
 import {useGame} from "@/stores/game.js";
 import {onMounted} from "vue";
 import {ITEMS} from "@/data/items.js";
-import {useGameLoop} from "@/compostables/useGameLoop.js";
+import {useGameLoop} from "@/composables/useGameLoop.js";
 import Log from "@/components/Log.vue";
 
 useGameLoop();
