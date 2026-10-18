@@ -4,4 +4,6 @@ export const BOSS_EVERY = 5; // every Nth kill in a zone spawns the boss
 export const SLOTS = ['weapon', 'armor', 'ring'];
 export const MAX_INVENTORY = 10;
 
-export const MAX_LOG = 30;
+export const MAX_LOG = 30
+
+export const SAVE_KEY = "dice_fighters_save";

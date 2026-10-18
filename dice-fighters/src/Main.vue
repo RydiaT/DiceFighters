@@ -4,6 +4,7 @@
         <v-container>
           <v-row justify="end">
             <v-btn @click="game.isPaused = !game.isPaused">Pause</v-btn>
+            <v-btn variant="outlined" @click="game.reset()" color="#c9302c">RESET</v-btn>
           </v-row>
           <v-row>
             <v-col>

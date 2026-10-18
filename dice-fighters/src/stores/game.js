@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import {ZONES} from "@/data/zones.js";
-import {MAX_LOG, BASE, BOSS_EVERY, MAX_INVENTORY} from "@/data/constants.js";
+import {MAX_LOG, BASE, BOSS_EVERY, MAX_INVENTORY, SAVE_KEY} from "@/data/constants.js";
 import {ITEMS} from "@/data/items.js";
 
 let playerTimer = 0;
@@ -14,7 +14,7 @@ export const useGame = defineStore('game', {
         hp: 50,
         gold: 0,
         inventory: [],
-        nextUid: 0,
+        itemUid: 0,
         equipped: {weapon: null, armor: null, ring: null},
         kills: 0,
         zone: 'forest',
@@ -106,11 +106,11 @@ export const useGame = defineStore('game', {
         addItem(item) {
             if(this.inventory.length >= MAX_INVENTORY) {
                 this.writeLog("Inventory Full!", "common")
-                return;
+                return -1;
             }
-            this.inventory.push({item: item, uid: this.nextUid})
+            this.inventory.push({item: item, uid: this.itemUid})
 
-            this.nextUid++;
+            this.itemUid++;
         },
         tick(dt) {
 
@@ -255,11 +255,19 @@ export const useGame = defineStore('game', {
                 if(lootRoll < 0) {
                     let item = ITEMS[name];
                     this.writeLog(`${this.enemy.name} dropped ${item.name}!`, "drop " + item.rarity)
-                    this.addItem(item);
+
+                    if(this.addItem(item) === -1) {
+                        this.writeLog(`You sold it and got ${item.sell * this.getSellMult(item.rarity)} gold instead.`, "drop " + item.rarity)
+                        this.gold += item.sell * this.getSellMult(item.rarity);
+                    }
 
                     return;
                 }
             }
+        },
+        reset() {
+            localStorage.removeItem(SAVE_KEY)
+            this.$reset()
         }
     },
 })
