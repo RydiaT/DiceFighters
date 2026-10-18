@@ -1,6 +1,5 @@
 /* ============ DATA (no DOM in here) ============ */
-export const SLOTS = ['weapon', 'armor', 'ring'];
-export const MAX_INVENTORY = 20;
+
 
 // Item templates. Instances get a unique uid when dropped.
 export const ITEMS = {

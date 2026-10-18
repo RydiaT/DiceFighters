@@ -238,3 +238,61 @@ div {
 .redSection{
   background-color: $darkerRed !important;
 }
+
+.health {
+  margin: 5px;
+  font-size: 10px
+}
+
+.gameLog {
+  padding: 5px;
+  border-style: dashed;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.log {
+  font-family: "JetBrains Mono", monospace;
+  overflow-anchor: none;
+
+  &.basic {
+    color: #ffffff;
+  }
+
+  &.playerHit {
+    color: $lightGreen
+  }
+
+  &.enemyHit {
+    color: $lightRed
+  }
+
+  &.fatal {
+    font-weight: bold;
+  }
+
+  &.spawn {
+    color: red;
+
+    &.boss {
+      font-weight: bold;
+    }
+  }
+
+  &.crit {
+    font-weight: bold;
+    font-style: italic;
+    color: $yellow;
+  }
+
+  &.playerDeath {
+    color: $darkRed;
+    font-style: italic;
+  }
+
+  &.levelUp {
+    color: $lightYellow;
+    font-weight: bold;
+    font-style: italic;
+  }
+}
