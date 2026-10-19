@@ -7,3 +7,5 @@ export const MAX_INVENTORY = 10;
 export const MAX_LOG = 30
 
 export const SAVE_KEY = "dice_fighters_save";
+
+export const DROP_CHANCE = 35; // chance for any enemy kill to give loot

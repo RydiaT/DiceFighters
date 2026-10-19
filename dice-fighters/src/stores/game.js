@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import {ZONES} from "@/data/zones.js";
-import {MAX_LOG, BASE, BOSS_EVERY, MAX_INVENTORY, SAVE_KEY} from "@/data/constants.js";
+import {MAX_LOG, BASE, BOSS_EVERY, MAX_INVENTORY, SAVE_KEY, DROP_CHANCE} from "@/data/constants.js";
 import {ITEMS} from "@/data/items.js";
 
 let playerTimer = 0;
@@ -104,6 +104,8 @@ export const useGame = defineStore('game', {
             if(oldGear) {
                 this.addItem(oldGear)
             }
+
+            this.hp = Math.min(this.hp, this.maxHp)
         },
 
         addItem(item) {
@@ -225,7 +227,7 @@ export const useGame = defineStore('game', {
 
             this.kills += 1;
 
-            if(this.enemy.name === ZONES[this.zone].boss.name && this.zonesCleared.indexOf(this.zone) < 0) {
+            if(ZONES[this.zone].next && this.enemy.name === ZONES[this.zone].boss.name && this.zonesCleared.indexOf(this.zone) < 0) {
                 this.zonesCleared.push(this.zone)
                 this.writeLog(`You unlocked the ${ZONES[ZONES[this.zone].next].name}!!!`, ZONES[this.zone].next)
             }
@@ -250,7 +252,9 @@ export const useGame = defineStore('game', {
             this.level += 1;
         },
         rollLoot() {
-            let loot = ZONES[this.zone].drops.sort((a, b) => { return a[1] - b[1] });
+            if(this.randint(0, 100) > DROP_CHANCE) return;
+
+            let loot = ZONES[this.zone].drops
             let total = 0;
 
             for(let [, rarity] of loot) {
