@@ -18,6 +18,7 @@
           <div v-if="item.item.stats.crit">Crit Rate +{{item.item.stats.crit * 100}}%</div>
           <div v-if="item.item.stats.maxHp">Max HP +{{item.item.stats.maxHp}}</div>
           <div v-if="item.item.stats.def">Defense +{{item.item.stats.def}}</div>
+          <div v-if="item.item.stats.speed">Attack Speed +{{item.item.stats.speed}}</div>
         </div>
       </template>
       <template v-slot:item.actions="{ item }">

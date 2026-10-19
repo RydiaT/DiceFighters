@@ -2,7 +2,7 @@
  <div class="section blueSection">
    <div class="sectionTitle blueTitle">Character Sheet</div>
    <v-row>
-     Level: {{game.level}}
+     Level: {{game.level}}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Gold: {{ game.gold }}
    </v-row>
    <v-row>
      <v-col>
@@ -19,21 +19,28 @@
        <v-row>
          Crit Rate: {{game.stats.crit * 100}}%
        </v-row>
+       <v-row>
+         Attack Speed: {{game.stats.speed.toFixed(2)}}
+       </v-row>
      </div>
      </v-col>
      <v-col>
-       <v-row>
-         Gold: {{ game.gold }}
-       </v-row>
-       <v-row :class="game.equipped.weapon ? game.equipped.weapon.rarity : ''">
-         Weapon: {{game.equipped.weapon ? game.equipped.weapon.name :  "None"}}
-       </v-row>
-       <v-row :class="game.equipped.armor ? game.equipped.armor.rarity : ''">
-         Armour: {{game.equipped.armor ? game.equipped.armor.name :  "None"}}
-       </v-row>
-       <v-row :class="game.equipped.ring ? game.equipped.ring.rarity : ''">
-         Ring: {{game.equipped.ring ? game.equipped.ring.name :  "None"}}
-       </v-row>
+       <template v-for="slot in SLOTS">
+         <v-row :class="game.equipped[slot] ? game.equipped[slot].rarity : ''">
+           {{ slot.charAt(0).toUpperCase() + slot.slice(1) }}: {{game.equipped[slot] ? game.equipped[slot].name :  "None"}}
+         </v-row>
+       </template>
+     </v-col>
+     <v-col>
+       <template v-for="slot in game.equipped">
+         <v-row>
+           <v-btn v-if="slot && slot.name" density="compact" @click="game.unequipItem(slot.slot)" :disabled="game.inventory.length >= MAX_INVENTORY">Unequip {{slot.slot}}</v-btn>
+           <!--       blank character row to make things line up -->
+           <div v-else>
+             ⠀
+           </div>
+         </v-row>
+       </template>
      </v-col>
    </v-row>
  </div>
@@ -41,6 +48,7 @@
 
 <script setup>
 import {useGame} from "@/stores/game.js";
+import {MAX_INVENTORY, SLOTS} from "@/data/constants.js";
 
 let game = useGame()
 </script>

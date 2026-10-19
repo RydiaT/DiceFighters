@@ -15,7 +15,7 @@ export const useGame = defineStore('game', {
         gold: 0,
         inventory: [],
         itemUid: 0,
-        equipped: {weapon: null, armor: null, ring: null},
+        equipped: {weapon: null, armor: null, boots: null, ring: null, gloves: null},
         kills: 0,
         zone: 'forest',
         zonesCleared: [],
@@ -107,7 +107,18 @@ export const useGame = defineStore('game', {
 
             this.hp = Math.min(this.hp, this.maxHp)
         },
+        unequipItem(slot) {
+          if (this.inventory.length >= MAX_INVENTORY) return;
 
+          let item = this.equipped[slot];
+          this.addItem(item)
+
+          this.equipped[slot] = null;
+
+            this.hp = Math.min(this.hp, this.maxHp)
+
+            this.writeLog(`Unequipped ${item.name}.`, "basic")
+        },
         addItem(item) {
             if(this.inventory.length >= MAX_INVENTORY) {
                 this.writeLog("Inventory Full!", "common")
