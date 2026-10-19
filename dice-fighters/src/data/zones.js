@@ -14,11 +14,12 @@ export const ZONES = {
     },
     crypt: {
         name: 'Sunken Crypt',
+        // ran out of free conversions, will convert these later
         enemies: [
-            { name: 'Skeleton', art: '/skeleton.webp', hp: 45, atk: 9,  def: 5, exp: 20, gold: 8,  speed: 0.8 },
-            { name: 'Ghoul',    art: '/ghoul.webp',    hp: 60, atk: 12, def: 4, exp: 26, gold: 12, speed: 1.0 },
+            { name: 'Skeleton', art: '/skeleton.png', hp: 45, atk: 9,  def: 5, exp: 20, gold: 8,  speed: 0.8 },
+            { name: 'Ghoul',    art: '/ghoul.png',    hp: 60, atk: 12, def: 4, exp: 26, gold: 12, speed: 1.0 },
         ],
-        boss: { name: 'Bone King', art: '/boneking.webp', hp: 320, atk: 20, def: 10, exp: 140, gold: 90, speed: 0.8, isBoss: true },
+        boss: { name: 'Bone King', art: '/boneking.png', hp: 320, atk: 20, def: 10, exp: 140, gold: 90, speed: 0.8, isBoss: true },
         drops: [ ['ironSword', 6], ['chainmail', 6], ['fangBlade', 3], ['bonePlate', 3], ['emberRing', 1] ],
     },
 };
