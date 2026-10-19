@@ -1,6 +1,6 @@
 <template>
-  <div class="panel">
-    <div class="sectionTitle">Log</div>
+  <div class="section greenSection">
+    <div class="sectionTitle greenTitle">Log</div>
     <div class="gameLog">
      <div v-for="(log, index) in game.log" :class="'log ' + log.type" :key="log.id">
        {{ log.text }}

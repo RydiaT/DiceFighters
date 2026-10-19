@@ -1,8 +1,8 @@
 <template>
- <div class="section panel">
-   <div class="sectionTitle">Character Sheet</div>
+ <div class="section blueSection">
+   <div class="sectionTitle blueTitle">Character Sheet</div>
    <v-row>
-     Gold: {{ game.gold }}
+     Level: {{game.level}}
    </v-row>
    <v-row>
      <v-col>
@@ -22,6 +22,9 @@
      </div>
      </v-col>
      <v-col>
+       <v-row>
+         Gold: {{ game.gold }}
+       </v-row>
        <v-row :class="game.equipped.weapon ? game.equipped.weapon.rarity : ''">
          Weapon: {{game.equipped.weapon ? game.equipped.weapon.name :  "None"}}
        </v-row>

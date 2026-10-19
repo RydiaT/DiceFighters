@@ -141,9 +141,22 @@ $fontGray: #333;
   background-color:$darkerPurple;
 }
 
-body {
-  background: #14181f;
+.v-application {
+  background: #afafaf url('../assets/site/ourple2.png') !important;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: top right;
+  background-size: auto;
+  background-blend-mode: multiply;
 }
+
+.strip {
+  background: rgba(20, 24, 31, 0.85);
+  backdrop-filter: blur(6px);
+  min-height: 100vh;
+  padding: 16px;
+}
+
 .panel {
   background: #1c222c; border: 1px solid #2c3544; border-radius: 6px;
   margin: 10px;
@@ -173,6 +186,11 @@ div {
 
 .section{
   padding: 10px;
+  margin: 10px;
+  border-color: #b8b8b8;
+  border-style: outset;
+  border-width: 0.5px;
+  border-radius: 5px;
 }
 
 .sectionTitle{
@@ -184,6 +202,7 @@ div {
 
 .defaultSection{
   background-color: #000;
+
 }
 .orangeTitle{
   color: $lightOrange;
@@ -220,6 +239,7 @@ div {
   border-style: dashed;
   max-height: 300px;
   overflow-y: auto;
+  background-color: #0e1117;
 }
 
 .log {
@@ -286,4 +306,16 @@ div {
 
 .epic {
   color: #c58cff;
+}
+
+.zoneSwitch {
+  margin: 5px;
+}
+
+.forest {
+  color: #70b035;
+}
+
+.crypt {
+  color: #337ab7;
 }

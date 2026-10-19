@@ -10,6 +10,7 @@ export const ZONES = {
         ],
         boss: { name: 'Forest Warden', art: '/warden.png', hp: 150, atk: 12, def: 5, exp: 60, gold: 40, speed: 0.9 },
         drops: [ ['rustySword', 8], ['leatherVest', 8], ['copperRing', 5], ['ironSword', 3], ['chainmail', 3] ],
+        next: "crypt",
     },
     crypt: {
         name: 'Sunken Crypt',

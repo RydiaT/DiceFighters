@@ -18,11 +18,12 @@ export const useGame = defineStore('game', {
         equipped: {weapon: null, armor: null, ring: null},
         kills: 0,
         zone: 'forest',
+        zonesCleared: [],
         enemy: null,
         log: [],
         isPaused: false,
         logId: 0,
-        saveVersion: 1,
+        saveVersion: 2,
         hitCount: 0,
     }),
 
@@ -224,6 +225,11 @@ export const useGame = defineStore('game', {
 
             this.kills += 1;
 
+            if(this.enemy.name === ZONES[this.zone].boss.name && this.zonesCleared.indexOf(this.zone) < 0) {
+                this.zonesCleared.push(this.zone)
+                this.writeLog(`You unlocked the ${ZONES[ZONES[this.zone].next].name}!!!`, ZONES[this.zone].next)
+            }
+
             this.spawnEnemy();
         },
         onPlayerDeath() {
@@ -275,8 +281,8 @@ export const useGame = defineStore('game', {
         },
         doSave() {
             let state = this;
-            let { level, exp, gold, hp, kills, zone, inventory, equipped, itemUid, logId, saveVersion } = state;
-            localStorage.setItem(SAVE_KEY, JSON.stringify({ level, exp, gold, hp, kills, zone, inventory, equipped, itemUid, logId, saveVersion}))
+            let { level, exp, gold, hp, kills, zone, inventory, equipped, itemUid, logId, zonesCleared, saveVersion } = state;
+            localStorage.setItem(SAVE_KEY, JSON.stringify({ level, exp, gold, hp, kills, zone, inventory, equipped, itemUid, logId, zonesCleared, saveVersion}))
         }
     },
 })
