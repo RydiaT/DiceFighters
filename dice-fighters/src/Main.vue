@@ -48,7 +48,7 @@ import {ZONES} from "@/data/zones.js";
 useGameLoop();
 
 let game = useGame()
-let assetURL = ref("../public/art/enemies")
+let assetURL = `${import.meta.env.BASE_URL}art/enemies`
 </script>
 
 <style scoped>

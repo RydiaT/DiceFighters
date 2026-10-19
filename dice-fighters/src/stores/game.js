@@ -227,7 +227,7 @@ export const useGame = defineStore('game', {
 
             this.kills += 1;
 
-            if(ZONES[this.zone].next && this.enemy.name === ZONES[this.zone].boss.name && this.zonesCleared.indexOf(this.zone) < 0) {
+            if(ZONES[this.zone].next && this.enemy.isBoss && this.zonesCleared.indexOf(this.zone) < 0) {
                 this.zonesCleared.push(this.zone)
                 this.writeLog(`You unlocked the ${ZONES[ZONES[this.zone].next].name}!!!`, ZONES[this.zone].next)
             }

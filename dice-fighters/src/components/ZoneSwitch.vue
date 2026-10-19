@@ -28,8 +28,8 @@ let zoneList = computed(() => {
 function zoneSwitch(zone) {
   game.zone = zone;
   game.kills = 0;
-  game.spawnEnemy();
   game.writeLog(`You traveled to the ${ZONES[zone].name}!`, zone)
+  game.spawnEnemy();
 }
 </script>
 

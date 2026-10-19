@@ -142,7 +142,7 @@ $fontGray: #333;
 }
 
 .v-application {
-  background: #afafaf url('../../public/art/site/ourple2.webp') !important;
+  background: #afafaf url('/art/site/ourple2.webp') !important;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: top right;
@@ -169,7 +169,7 @@ $fontGray: #333;
   text-align: center; color: #6c7a90; font-size: .8rem; overflow: hidden;
 }
 .art-frame img {
-  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated;
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
 }
 .art-frame.hit {
   animation: shake .15s;
