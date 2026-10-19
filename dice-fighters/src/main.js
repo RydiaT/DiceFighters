@@ -6,8 +6,6 @@ import { mdi } from 'vuetify/iconsets/mdi'
 
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 
 import './styles/main.scss'
 import {useGame} from "@/stores/game.js";
@@ -15,13 +13,11 @@ import {SAVE_KEY} from "@/data/constants.js";
 
 const app = createApp(Main)
 const vuetify = createVuetify({
-    components,
-    directives,
     theme: {
         defaultTheme: 'dark', // 'system' | 'light' | 'dark'
     },
     icons: {
-        defaultSet: 'fa',
+        defaultSet: 'mdi',
         aliases,
         sets: {
             fa,
