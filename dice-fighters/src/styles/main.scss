@@ -146,6 +146,7 @@ body {
 }
 .panel {
   background: #1c222c; border: 1px solid #2c3544; border-radius: 6px;
+  margin: 10px;
 }
 /* ENEMY ART SLOT: change size here. The <img> fills this frame. */
 .art-frame {
@@ -166,26 +167,6 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .art-frame.hit { animation: none; }
 }
-.progress {
-  height: 18px; background: #0f131a;
-}
-.progress-bar {
-  transition: width .15s linear; font-size: .72rem;
-}
-#log {
-  height: 180px; overflow-y: auto; font-size: .82rem; font-family: ui-monospace, Menlo, monospace;
-}
-#log div {
-  padding: 1px 0;
-}
-
-
-
-
-#inventory {
-  max-height: 320px; overflow-y: auto;
-}
-
 div {
   border-radius: 5px;
 }

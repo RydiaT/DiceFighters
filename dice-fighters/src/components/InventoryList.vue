@@ -1,5 +1,5 @@
 <template>
-  <div class="section">
+  <div class="section panel">
     <div class="sectionTitle">Inventory</div>
     <v-data-table :headers="headers" :items="game.inventory" density="compact" hide-default-footer class="elevation-2" :items-per-page="-1" disable-sort>
       <template v-slot:item.name="{ item }">

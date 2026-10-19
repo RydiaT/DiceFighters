@@ -37,7 +37,13 @@ let game = useGame()
 
 try {
     let raw = localStorage.getItem(SAVE_KEY)
-    if(raw) game.$patch(JSON.parse(raw))
+    let data = {};
+
+    if (raw) data = JSON.parse(raw)
+
+    if(data.saveVersion === game.saveVersion) {
+        game.$patch(JSON.parse(raw))
+    }
 } catch (e) {
     console.warn("Couldn't load save", e)
 }
@@ -50,9 +56,9 @@ game.$subscribe((mutation, state) => {
     if(now - lastSave < 3000) return
     lastSave = now;
 
-    let { level, exp, hp, gold, kills, zone, inventory, equipped, itemUid, logId } = state;
-    localStorage.setItem(SAVE_KEY, JSON.stringify({ level, exp, gold, kills, zone, inventory, equipped, itemUid, logId}))
-    console.log("Saved!")
+    game.doSave();
 })
+
+window.addEventListener('beforeunload', game.doSave)
 
 app.mount('#app')

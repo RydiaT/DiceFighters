@@ -22,6 +22,8 @@ export const useGame = defineStore('game', {
         log: [],
         isPaused: false,
         logId: 0,
+        saveVersion: 1,
+        hitCount: 0,
     }),
 
     getters: {
@@ -179,6 +181,8 @@ export const useGame = defineStore('game', {
             } else {
                 this.writeLog(`You hit for ${base}!`, "playerHit")
             }
+
+            this.hitCount += 1;
         },
         enemyAttack() {
             let base = this.enemy.atk;
@@ -268,6 +272,11 @@ export const useGame = defineStore('game', {
         reset() {
             localStorage.removeItem(SAVE_KEY)
             this.$reset()
+        },
+        doSave() {
+            let state = this;
+            let { level, exp, gold, hp, kills, zone, inventory, equipped, itemUid, logId, saveVersion } = state;
+            localStorage.setItem(SAVE_KEY, JSON.stringify({ level, exp, gold, hp, kills, zone, inventory, equipped, itemUid, logId, saveVersion}))
         }
     },
 })

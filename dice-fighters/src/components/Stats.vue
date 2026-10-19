@@ -1,5 +1,5 @@
 <template>
- <div class="section">
+ <div class="section panel">
    <div class="sectionTitle">Character Sheet</div>
    <v-row>
      Gold: {{ game.gold }}

@@ -14,6 +14,7 @@
             </v-col>
             <v-col v-if="game.enemy">
               <div class="sectionTitle">{{ game.enemy.name }}</div>
+              <enemy-art :src="assetURL + game.enemy.art"></enemy-art>
               <v-progress-linear height="20" :model-value="(game.enemy.hp / game.enemy.maxHp) * 100" class="health" color="#c9302c">{{game.enemy.hp}} / {{game.enemy.maxHp}} / ({{ ((game.enemy.hp / game.enemy.maxHp) * 100).toFixed(2) }}%)</v-progress-linear>
             </v-col>
           </v-row>
@@ -34,15 +35,17 @@
 <script setup>
 import InventoryList from "@/components/InventoryList.vue";
 import {useGame} from "@/stores/game.js";
-import {onMounted} from "vue";
+import {onMounted, ref} from "vue";
 import {ITEMS} from "@/data/items.js";
 import {useGameLoop} from "@/composables/useGameLoop.js";
 import Log from "@/components/Log.vue";
 import Stats from "@/components/Stats.vue";
+import EnemyArt from "@/components/EnemyArt.vue";
 
 useGameLoop();
 
 let game = useGame()
+let assetURL = ref("../src/assets")
 </script>
 
 <style scoped>

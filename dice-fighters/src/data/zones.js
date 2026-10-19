@@ -4,20 +4,20 @@ export const ZONES = {
     forest: {
         name: 'Mossy Forest',
         enemies: [
-            { name: 'Slime',  art: 'art/enemies/slime.png',  hp: 20, atk: 3, def: 0, exp: 6,  gold: 2, speed: 0.8 },
-            { name: 'Wolf',   art: 'art/enemies/wolf.png',   hp: 30, atk: 6, def: 1, exp: 10, gold: 4, speed: 1.3 },
-            { name: 'Bandit', art: 'art/enemies/bandit.png', hp: 40, atk: 7, def: 3, exp: 14, gold: 8, speed: 1.0 },
+            { name: 'Slime',  art: '/slime.png',  hp: 20, atk: 3, def: 0, exp: 6,  gold: 2, speed: 0.8 },
+            { name: 'Wolf',   art: '/wolf.png',   hp: 30, atk: 6, def: 1, exp: 10, gold: 4, speed: 1.3 },
+            { name: 'Bandit', art: '/bandit.png', hp: 40, atk: 7, def: 3, exp: 14, gold: 8, speed: 1.0 },
         ],
-        boss: { name: 'Forest Warden', art: 'art/enemies/warden.png', hp: 150, atk: 12, def: 5, exp: 60, gold: 40, speed: 0.9 },
+        boss: { name: 'Forest Warden', art: '/warden.png', hp: 150, atk: 12, def: 5, exp: 60, gold: 40, speed: 0.9 },
         drops: [ ['rustySword', 8], ['leatherVest', 8], ['copperRing', 5], ['ironSword', 3], ['chainmail', 3] ],
     },
     crypt: {
         name: 'Sunken Crypt',
         enemies: [
-            { name: 'Skeleton', art: 'art/enemies/skeleton.png', hp: 45, atk: 9,  def: 5, exp: 20, gold: 8,  speed: 0.8 },
-            { name: 'Ghoul',    art: 'art/enemies/ghoul.png',    hp: 60, atk: 12, def: 4, exp: 26, gold: 12, speed: 1.0 },
+            { name: 'Skeleton', art: '/skeleton.png', hp: 45, atk: 9,  def: 5, exp: 20, gold: 8,  speed: 0.8 },
+            { name: 'Ghoul',    art: '/ghoul.png',    hp: 60, atk: 12, def: 4, exp: 26, gold: 12, speed: 1.0 },
         ],
-        boss: { name: 'Bone King', art: 'art/enemies/boneking.png', hp: 320, atk: 20, def: 10, exp: 140, gold: 90, speed: 0.8 },
+        boss: { name: 'Bone King', art: '/boneking.png', hp: 320, atk: 20, def: 10, exp: 140, gold: 90, speed: 0.8 },
         drops: [ ['ironSword', 6], ['chainmail', 6], ['fangBlade', 3], ['bonePlate', 3], ['emberRing', 1] ],
     },
 };
