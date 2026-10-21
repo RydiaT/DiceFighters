@@ -43,7 +43,7 @@ let availableQuests = computed(() => {
   let out = []
 
   _.forEach(quests, function([key, value]){
-    if(game.zonesCleared.includes(value.unlockAt) && !game.finishedQuests.includes(key) && game.activeQuests.some(q => q[0] === key)) {
+    if(game.zonesCleared.includes(value.unlockAt) && !game.finishedQuests.includes(key) && !game.activeQuests.some(q => q[0] === key)) {
       out.push({
         id: key,
         name: value.label,

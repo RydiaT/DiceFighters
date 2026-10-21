@@ -34,7 +34,7 @@
      <v-col>
        <template v-for="slot in SLOTS">
          <v-row>
-           <v-btn v-if="slot && slot.name" density="compact" @click="game.unequipItem(slot.slot)" :disabled="game.inventory.length >= MAX_INVENTORY">Unequip</v-btn>
+           <v-btn v-if="game.equipped[slot]" density="compact" @click="game.unequipItem(slot)" :disabled="game.inventory.length >= MAX_INVENTORY">Unequip</v-btn>
            <!--       blank character row to make things line up -->
            <div v-else>
              ⠀

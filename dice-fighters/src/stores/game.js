@@ -268,9 +268,9 @@ export const useGame = defineStore('game', {
                 }
             }.bind(this))
 
-            for(let quest in finished) {
-                this.finishedQuests.push(finished[0])
-                this.activeQuests.splice(finished[1], 1)
+            for(let index in finished) {
+                this.finishedQuests.push(finished[index][0])
+                this.activeQuests.splice(finished[index][1], 1)
             }
 
             while(this.expToNext <= this.exp) {
