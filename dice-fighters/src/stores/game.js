@@ -3,6 +3,8 @@ import { ref, computed } from 'vue'
 import {ZONES} from "@/data/zones.js";
 import {MAX_LOG, BASE, BOSS_EVERY, MAX_INVENTORY, SAVE_KEY, DROP_CHANCE} from "@/data/constants.js";
 import {ITEMS} from "@/data/items.js";
+import {QUESTS} from "@/data/town.js";
+import _ from "lodash"
 
 let playerTimer = 0;
 let enemyTimer = 0;
@@ -18,13 +20,16 @@ export const useGame = defineStore('game', {
         equipped: {weapon: null, armor: null, boots: null, ring: null, gloves: null},
         kills: 0,
         zone: 'forest',
+        location: 'field',
         zonesCleared: [],
         enemy: null,
         log: [],
         isPaused: false,
         logId: 0,
-        saveVersion: 2,
+        saveVersion: 3,
         hitCount: 0,
+        activeQuests: [],
+        finishedQuests: []
     }),
 
     getters: {
@@ -129,13 +134,12 @@ export const useGame = defineStore('game', {
             this.itemUid++;
         },
         tick(dt) {
+            if(this.isPaused || this.location !== 'field') {
+                return;
+            }
 
             if(!this.enemy) {
                 this.spawnEnemy();
-            }
-
-            if(this.isPaused) {
-                return;
             }
 
             playerTimer += dt * this.stats.speed;
@@ -230,6 +234,37 @@ export const useGame = defineStore('game', {
             this.exp += this.enemy.exp;
             this.gold += this.enemy.gold;
 
+
+
+            if(this.enemy.isBoss && this.zonesCleared.indexOf(this.zone) < 0) {
+                this.zonesCleared.push(this.zone)
+                if (ZONES[this.zone].next) this.writeLog(`You unlocked the ${ZONES[ZONES[this.zone].next].name}!!!`, ZONES[this.zone].next)
+            }
+
+            _.forEach(this.activeQuests, function(quest){
+                let questData = QUESTS[quest[0]]
+
+                if(questData.type === 'kill' && questData.thing === this.zone + " " + this.enemy.id) {
+                    quest[1] += 1
+
+                    if(quest[1] > quest[2]) {
+                        this.writeLog(`Quest "${questData.name}" Completed!`, 'crit');
+
+                        if(quest[3].exp) {
+                            this.exp += quest[3].exp;
+                        }
+
+                        if(quest[3].gold) {
+                            this.gold += quest[3].gold;
+                        }
+
+                        this.finishedQuests.push(quest[0])
+                        this.activeQuests.splice(this.activeQuests.indexOf(quest), 1)
+                        return false;
+                    }
+                }
+            }.bind(this))
+
             while(this.expToNext <= this.exp) {
                 this.doLevelUp();
             }
@@ -237,11 +272,6 @@ export const useGame = defineStore('game', {
             this.rollLoot();
 
             this.kills += 1;
-
-            if(ZONES[this.zone].next && this.enemy.isBoss && this.zonesCleared.indexOf(this.zone) < 0) {
-                this.zonesCleared.push(this.zone)
-                this.writeLog(`You unlocked the ${ZONES[ZONES[this.zone].next].name}!!!`, ZONES[this.zone].next)
-            }
 
             this.spawnEnemy();
         },
@@ -296,8 +326,8 @@ export const useGame = defineStore('game', {
         },
         doSave() {
             let state = this;
-            let { level, exp, gold, hp, kills, zone, inventory, equipped, itemUid, logId, zonesCleared, saveVersion } = state;
-            localStorage.setItem(SAVE_KEY, JSON.stringify({ level, exp, gold, hp, kills, zone, inventory, equipped, itemUid, logId, zonesCleared, saveVersion}))
+            let { level, exp, gold, hp, kills, zone, location, inventory, equipped, itemUid, logId, zonesCleared, activeQuests, finishedQuests, saveVersion } = state;
+            localStorage.setItem(SAVE_KEY, JSON.stringify({ level, exp, gold, hp, kills, zone, location, inventory, equipped, itemUid, logId, zonesCleared, activeQuests, finishedQuests, saveVersion}))
         }
     },
 })

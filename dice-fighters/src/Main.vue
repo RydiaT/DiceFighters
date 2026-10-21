@@ -6,21 +6,18 @@
             <v-btn @click="game.isPaused = !game.isPaused">Pause</v-btn>
             <v-btn variant="outlined" @click="game.reset()" color="#c9302c">RESET</v-btn>
           </v-row>
+          <v-row v-if="game.location === 'field'">
+            <health-bars />
+          </v-row>
+          <v-row v-else-if="game.location === 'town'">
+            <town />
+          </v-row>
           <v-row>
-            <v-col>
-              <div class="sectionTitle">You</div>
-              <v-progress-linear height="20" :model-value="(game.hp / game.maxHp) * 100" class="health" color="#70b035">{{game.hp}} / {{game.maxHp}} ({{ ((game.hp / game.maxHp) * 100).toFixed(2) }}%)</v-progress-linear>
-              <v-progress-linear height="20" :model-value="(game.exp / game.expToNext) * 100" class="health" color="#ffea4d">{{game.exp}} / {{game.expToNext}} / ({{ ((game.exp / game.expToNext) * 100).toFixed(2) }}%)</v-progress-linear>
-              <zone-switch />
-            </v-col>
-            <v-col v-if="game.enemy">
-              <div class="sectionTitle" :style="game.enemy.isBoss ? 'font-weight: bold; font-style: italic; color: #fffadb;' : ''">{{ game.enemy.name }} {{ game.enemy.isBoss ? "(BOSS)" : ""}}</div>
-              <enemy-art :src="assetURL + game.enemy.art"></enemy-art>
-              <v-progress-linear height="20" :model-value="(game.enemy.hp / game.enemy.maxHp) * 100" class="health" color="#c9302c">{{game.enemy.hp}} / {{game.enemy.maxHp}} / ({{ ((game.enemy.hp / game.enemy.maxHp) * 100).toFixed(2) }}%)</v-progress-linear>
-            </v-col>
+            <zone-switch />
           </v-row>
           <v-row>
             <v-col>
+              <quest-tracker />
               <stats />
               <log />
             </v-col>
@@ -34,21 +31,22 @@
 </template>
 
 <script setup>
-import InventoryList from "@/components/InventoryList.vue";
 import {useGame} from "@/stores/game.js";
 import {computed, onMounted, ref} from "vue";
 import {ITEMS} from "@/data/items.js";
 import {useGameLoop} from "@/composables/useGameLoop.js";
-import Log from "@/components/Log.vue";
-import Stats from "@/components/Stats.vue";
-import EnemyArt from "@/components/EnemyArt.vue";
-import ZoneSwitch from "@/components/ZoneSwitch.vue";
 import {ZONES} from "@/data/zones.js";
+import HealthBars from "@/components/field/HealthBars.vue";
+import InventoryList from "@/components/menu/InventoryList.vue";
+import Log from "@/components/menu/Log.vue";
+import Stats from "@/components/menu/Stats.vue";
+import Town from "@/components/town/Town.vue";
+import ZoneSwitch from "@/components/menu/ZoneSwitch.vue";
+import QuestTracker from "@/components/menu/QuestTracker.vue";
 
 useGameLoop();
 
 let game = useGame()
-let assetURL = `${import.meta.env.BASE_URL}art/enemies`
 </script>
 
 <style scoped>

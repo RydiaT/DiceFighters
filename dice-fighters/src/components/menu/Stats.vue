@@ -20,7 +20,7 @@
          Crit Rate: {{game.stats.crit * 100}}%
        </v-row>
        <v-row>
-         Attack Speed: {{game.stats.speed.toFixed(2)}}
+         Attack Speed: {{(1 / game.stats.speed).toFixed(2)}}s
        </v-row>
      </div>
      </v-col>
@@ -34,7 +34,7 @@
      <v-col>
        <template v-for="slot in game.equipped">
          <v-row>
-           <v-btn v-if="slot && slot.name" density="compact" @click="game.unequipItem(slot.slot)" :disabled="game.inventory.length >= MAX_INVENTORY">Unequip {{slot.slot}}</v-btn>
+           <v-btn v-if="slot && slot.name" density="compact" @click="game.unequipItem(slot.slot)" :disabled="game.inventory.length >= MAX_INVENTORY">Unequip</v-btn>
            <!--       blank character row to make things line up -->
            <div v-else>
              ⠀

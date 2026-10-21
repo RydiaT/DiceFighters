@@ -319,3 +319,18 @@ div {
 .crypt {
   color: #337ab7;
 }
+
+.shop {
+  overflow-y: auto;
+  max-height: 400px;
+
+  &.v-table{
+    table {
+      > tbody {
+        tr:hover{
+          background-color: $darkOrange !important;
+        }
+      }
+    }
+  }
+}
