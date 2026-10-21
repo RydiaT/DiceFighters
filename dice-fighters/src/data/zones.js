@@ -17,7 +17,7 @@ export const ZONES = {
         // ran out of free conversions, will convert these later. load times don't seem to be affected for right now
         enemies: [
             { id: 'skeleton',name: 'Skeleton', art: '/skeleton.png', hp: 45, atk: 9,  def: 5, exp: 20, gold: 8,  speed: 0.8 },
-            { name: 'ghoul',    art: '/ghoul.png',    hp: 60, atk: 12, def: 4, exp: 26, gold: 12, speed: 1.0 },
+            { id: 'ghoul', name: 'Ghoul',    art: '/ghoul.png',    hp: 60, atk: 12, def: 4, exp: 26, gold: 12, speed: 1.0 },
         ],
         boss: { id: 'boneKing',name: 'Bone King', art: '/boneking.png', hp: 320, atk: 20, def: 10, exp: 140, gold: 90, speed: 0.8, isBoss: true },
         drops: [ ['ironSword', 6], ['chainmail', 6], ['chainBoots', 6], ['fangBlade', 3], ['bonePlate', 3], ['emberRing', 1], ['huntersGloves', 1] ],

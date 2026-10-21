@@ -33,7 +33,6 @@ function zoneSwitch(zone) {
   } else {
     game.zone = zone;
     game.location = 'field'
-    game.kills = 0;
     game.writeLog(`You traveled to the ${ZONES[zone].name}!`, zone)
     game.spawnEnemy();
   }

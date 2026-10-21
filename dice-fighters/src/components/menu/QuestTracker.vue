@@ -1,5 +1,5 @@
 <template>
-  <v-data-table :items="quests" :headers="headers" density="compact" hide-default-footer class="shop elevation-2" :items-per-page="-1">
+  <v-data-table :items="quests" :headers="headers" density="compact" hide-default-footer class="shop elevation-2" :items-per-page="-1" v-if="game.activeQuests.length">
   </v-data-table>
 </template>
 

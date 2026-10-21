@@ -116,6 +116,9 @@ export const useGame = defineStore('game', {
           if (this.inventory.length >= MAX_INVENTORY) return;
 
           let item = this.equipped[slot];
+
+          if(!item) return
+
           this.addItem(item)
 
           this.equipped[slot] = null;
@@ -241,14 +244,16 @@ export const useGame = defineStore('game', {
                 if (ZONES[this.zone].next) this.writeLog(`You unlocked the ${ZONES[ZONES[this.zone].next].name}!!!`, ZONES[this.zone].next)
             }
 
+            let finished = [];
+
             _.forEach(this.activeQuests, function(quest){
                 let questData = QUESTS[quest[0]]
 
                 if(questData.type === 'kill' && questData.thing === this.zone + " " + this.enemy.id) {
                     quest[1] += 1
 
-                    if(quest[1] > quest[2]) {
-                        this.writeLog(`Quest "${questData.name}" Completed!`, 'crit');
+                    if(quest[1] >= quest[2]) {
+                        this.writeLog(`Quest "${questData.label}" Completed!`, 'crit');
 
                         if(quest[3].exp) {
                             this.exp += quest[3].exp;
@@ -258,12 +263,15 @@ export const useGame = defineStore('game', {
                             this.gold += quest[3].gold;
                         }
 
-                        this.finishedQuests.push(quest[0])
-                        this.activeQuests.splice(this.activeQuests.indexOf(quest), 1)
-                        return false;
+                        finished.push([quest[0], this.activeQuests.indexOf(quest)])
                     }
                 }
             }.bind(this))
+
+            for(let quest in finished) {
+                this.finishedQuests.push(finished[0])
+                this.activeQuests.splice(finished[1], 1)
+            }
 
             while(this.expToNext <= this.exp) {
                 this.doLevelUp();

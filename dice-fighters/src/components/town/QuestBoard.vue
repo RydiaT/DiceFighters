@@ -10,7 +10,7 @@
       </template>
       <template v-slot:item.actions="{ item }">
         <div>
-          <v-btn style="margin-right: 5px" color="#70b035" density="compact" @click="accept(item)" :disabled="game.activeQuests.includes([item.id, 0, scaleCount(item.count), item.reward])">Accept</v-btn>
+          <v-btn style="margin-right: 5px" color="#70b035" density="compact" @click="accept(item)" :disabled="game.activeQuests.some(q => q[0] === item.id)">Accept</v-btn>
         </div>
       </template>
     </v-data-table>
@@ -43,7 +43,7 @@ let availableQuests = computed(() => {
   let out = []
 
   _.forEach(quests, function([key, value]){
-    if(game.zonesCleared.includes(value.unlockAt) && !game.finishedQuests.includes(key)) {
+    if(game.zonesCleared.includes(value.unlockAt) && !game.finishedQuests.includes(key) && game.activeQuests.some(q => q[0] === key)) {
       out.push({
         id: key,
         name: value.label,
