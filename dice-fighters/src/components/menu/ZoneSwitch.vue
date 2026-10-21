@@ -31,9 +31,9 @@ function zoneSwitch(zone) {
     game.location = 'town'
     game.writeLog(`You traveled to a nearby town!`, 'levelUp')
   } else {
+    if(game.zone !== zone) game.kills = 0;
     game.zone = zone;
     game.location = 'field'
-    if(game.zone !== zone) game.kills = 0;
     game.writeLog(`You traveled to the ${ZONES[zone].name}!`, zone)
     game.spawnEnemy();
   }
